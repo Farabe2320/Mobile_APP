@@ -1,0 +1,1994 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>দোকান সাথী - Dokan Sathi</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+Bengali:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap');
+        
+        body {
+            font-family: 'Noto Sans Bengali', 'Inter', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+        
+        .commercial-gradient {
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+        }
+        
+        .success-gradient {
+            background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
+        }
+        
+        .warning-gradient {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+        }
+        
+        .premium-card {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+        }
+        
+        .glass-effect {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .scan-box {
+            border: 3px dashed #10b981;
+            animation: pulse 2s infinite;
+            background: rgba(16, 185, 129, 0.05);
+        }
+        
+        @keyframes pulse {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.8; transform: scale(1.02); }
+        }
+        
+        @keyframes companionGlow {
+            0%, 100% { box-shadow: 0 0 20px rgba(59, 130, 246, 0.3); }
+            50% { box-shadow: 0 0 30px rgba(59, 130, 246, 0.6); }
+        }
+        
+        .companion-glow {
+            animation: companionGlow 3s ease-in-out infinite;
+        }
+        
+        .progress-bar {
+            transition: width 0.3s ease;
+        }
+        
+        .chart-bar {
+            transition: height 0.5s ease;
+        }
+        
+        .notification {
+            animation: slideIn 0.3s ease;
+        }
+        
+        @keyframes slideIn {
+            from { transform: translateY(-100%); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+        
+        .hover-lift {
+            transition: all 0.3s ease;
+        }
+        
+        .hover-lift:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15);
+        }
+        
+        .metric-card {
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.9) 0%, rgba(255, 255, 255, 0.7) 100%);
+            border-left: 4px solid;
+        }
+        
+        .revenue-card { border-left-color: #10b981; }
+        .customer-card { border-left-color: #3b82f6; }
+        .growth-card { border-left-color: #8b5cf6; }
+        .profit-card { border-left-color: #f59e0b; }
+        
+        .commercial-button {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .commercial-button:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 10px 25px rgba(102, 126, 234, 0.4);
+        }
+        
+        .commercial-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.5s;
+        }
+        
+        .commercial-button:hover::before {
+            left: 100%;
+        }
+    </style>
+</head>
+<body class="min-h-screen">
+    <!-- Mobile App Container -->
+    <div class="max-w-xs mx-auto bg-white min-h-screen shadow-2xl relative overflow-hidden">
+        
+        <!-- Login Screen -->
+        <div id="loginScreen" class="screen">
+            <div class="commercial-gradient min-h-screen flex items-center justify-center p-6 relative">
+                <!-- Background Pattern -->
+                <div class="absolute inset-0 opacity-10">
+                    <div class="absolute top-10 left-10 w-32 h-32 border border-white rounded-full"></div>
+                    <div class="absolute top-32 right-16 w-24 h-24 border border-white rounded-full"></div>
+                    <div class="absolute bottom-20 left-20 w-40 h-40 border border-white rounded-full"></div>
+                    <div class="absolute bottom-32 right-8 w-20 h-20 border border-white rounded-full"></div>
+                </div>
+                
+                <div class="premium-card rounded-2xl p-4 w-full max-w-xs relative z-10">
+                    <!-- Logo -->
+                    <div class="text-center mb-4">
+                        <div class="commercial-gradient w-12 h-12 rounded-xl flex items-center justify-center mx-auto mb-2 shadow-lg relative overflow-hidden companion-glow">
+                            <!-- Shop building with helper icon -->
+                            <svg class="w-7 h-7 text-white" fill="currentColor" viewBox="0 0 24 24">
+                                <!-- Shop building -->
+                                <path d="M12 3L2 12h3v8h14v-8h3L12 3zm0 2.84L18.16 12H17v6H7v-6H5.84L12 5.84z" opacity="0.7"/>
+                                <!-- Helper/companion icon -->
+                                <circle cx="16" cy="8" r="2.5" fill="white"/>
+                                <path d="M16 6.8c-.4 0-.8.36-.8.8s.36.8.8.8.8-.36.8-.8-.36-.8-.8-.8zm0 2c-.6 0-1.8.3-1.8.9v.5h3.6v-.5c0-.6-1.2-.9-1.8-.9z" fill="currentColor"/>
+                            </svg>
+                            <!-- Decorative elements -->
+                            <div class="absolute top-0.5 right-0.5 w-1.5 h-1.5 bg-yellow-300 rounded-full animate-pulse"></div>
+                            <div class="absolute bottom-1 left-1 w-1 h-1 bg-green-300 rounded-full animate-pulse" style="animation-delay: 0.5s"></div>
+                        </div>
+                        <h1 class="text-lg font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent mb-1">দোকান সাথী</h1>
+                        <p class="text-gray-600 font-medium text-xs">আপনার ব্যবসার বিশ্বস্ত সহায়ক</p>
+                        <div class="w-8 h-0.5 bg-gradient-to-r from-blue-500 to-purple-500 mx-auto mt-1 rounded-full"></div>
+                    </div>
+                    
+                    <!-- Login Form -->
+                    <form onsubmit="login(event)" class="space-y-3">
+                        <div>
+                            <label class="block text-xs font-semibold text-gray-700 mb-1">ব্যবহারকারীর নাম</label>
+                            <input type="text" id="username" placeholder="আপনার নাম লিখুন" class="w-full p-2 border-2 border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all bg-gray-50 focus:bg-white text-sm" required>
+                        </div>
+                        
+                        <div>
+                            <label class="block text-xs font-semibold text-gray-700 mb-1">পাসওয়ার্ড</label>
+                            <input type="password" id="password" placeholder="পাসওয়ার্ড লিখুন" class="w-full p-2 border-2 border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all bg-gray-50 focus:bg-white text-sm" required>
+                        </div>
+                        
+                        <button type="submit" class="w-full commercial-button text-white py-2 rounded-lg font-bold shadow-xl text-sm">
+                            লগইন করুন
+                        </button>
+                    </form>
+                    
+                    <div class="mt-3 text-center">
+                        <div class="glass-effect rounded-lg p-2">
+                            <p class="text-xs text-gray-600 font-medium">Demo Credentials</p>
+                            <p class="text-xs text-gray-500">admin / 123456</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Home Screen -->
+        <div id="homeScreen" class="screen hidden">
+            <!-- Header -->
+            <div class="commercial-gradient text-white p-2 text-center relative overflow-hidden">
+                <!-- Background Pattern -->
+                <div class="absolute inset-0 opacity-5">
+                    <div class="absolute top-0 right-0 w-16 h-16 border border-white rounded-full transform translate-x-8 -translate-y-8"></div>
+                    <div class="absolute bottom-0 left-0 w-12 h-12 border border-white rounded-full transform -translate-x-6 translate-y-6"></div>
+                </div>
+                
+                <div class="relative z-10">
+                    <div class="flex items-center justify-center mb-2">
+                        <div class="w-6 h-6 bg-white bg-opacity-20 rounded-md flex items-center justify-center mr-1">
+                            <svg class="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M12 3L2 12h3v8h14v-8h3L12 3zm0 2.84L18.16 12H17v6H7v-6H5.84L12 5.84z" opacity="0.8"/>
+                                <circle cx="16" cy="8" r="2" fill="white"/>
+                                <path d="M16 7c-.3 0-.6.27-.6.6s.27.6.6.6.6-.27.6-.6-.27-.6-.6-.6zm0 1.5c-.45 0-1.35.23-1.35.68v.37h2.7v-.37c0-.45-.9-.68-1.35-.68z" fill="currentColor"/>
+                            </svg>
+                        </div>
+                        <div>
+                            <h1 class="text-sm font-bold">দোকান সাথী</h1>
+                            <p class="text-blue-100 font-medium text-xs">আপনার ব্যবসার বিশ্বস্ত সহায়ক</p>
+                        </div>
+                    </div>
+                    <div class="glass-effect rounded-lg p-2">
+                        <div class="grid grid-cols-2 gap-2 text-xs">
+                            <div class="text-center">
+                                <div class="text-sm font-bold text-green-300">১২,৮৫০</div>
+                                <div class="text-blue-200 text-xs">আজকের বিক্রয়</div>
+                            </div>
+                            <div class="text-center">
+                                <div class="text-sm font-bold text-yellow-300">২৩</div>
+                                <div class="text-blue-200 text-xs">মোট গ্রাহক</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Daily Business Alerts -->
+            <div class="mx-2 mt-2">
+                <div class="premium-card rounded-lg p-2 border-l-4 border-green-500">
+                    <div class="flex items-center mb-2">
+                        <div class="w-5 h-5 success-gradient rounded-md flex items-center justify-center mr-1">
+                            <svg class="w-3 h-3 text-white" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+                            </svg>
+                        </div>
+                        <h3 class="font-bold text-gray-800 text-xs">দোকান সাথীর আজকের পরামর্শ</h3>
+                    </div>
+                    <div class="space-y-1">
+                        <div class="flex items-center p-1 bg-green-50 rounded-md">
+                            <span class="text-sm mr-1">🔥</span>
+                            <div>
+                                <p class="font-semibold text-green-800 text-xs">সর্বাধিক বিক্রি</p>
+                                <p class="text-xs text-green-600">স্মার্ট ফ্যান (৮ পিস)</p>
+                            </div>
+                        </div>
+                        <div class="flex items-center p-1 bg-blue-50 rounded-md">
+                            <span class="text-sm mr-1">📈</span>
+                            <div>
+                                <p class="font-semibold text-blue-800 text-xs">লাভ বৃদ্ধি</p>
+                                <p class="text-xs text-blue-600">গতকালের চেয়ে ১৫% বেশি</p>
+                            </div>
+                        </div>
+                        <div class="flex items-center p-1 bg-orange-50 rounded-md">
+                            <span class="text-sm mr-1">⚠️</span>
+                            <div>
+                                <p class="font-semibold text-orange-800 text-xs">স্টক সতর্কতা</p>
+                                <p class="text-xs text-orange-600">LED বাল্ব কম (৮ পিস বাকি)</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Main Content -->
+            <div class="p-2 space-y-2">
+                <!-- Menu Options -->
+                <div class="grid grid-cols-2 gap-2">
+                    <button onclick="showScreen('stockScreen')" class="premium-card p-2 rounded-lg hover-lift text-center group">
+                        <div class="w-6 h-6 bg-gradient-to-br from-blue-500 to-blue-600 rounded-md flex items-center justify-center mx-auto mb-1 group-hover:scale-110 transition-transform">
+                            <svg class="w-3 h-3 text-white" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+                            </svg>
+                        </div>
+                        <div class="font-bold text-gray-800 text-xs mb-0.5">স্টক লেভেল দেখুন</div>
+                        <div class="text-gray-500 text-xs">Inventory Management</div>
+                    </button>
+                    
+                    <button onclick="showScreen('restockScreen')" class="premium-card p-2 rounded-lg hover-lift text-center group">
+                        <div class="w-6 h-6 bg-gradient-to-br from-yellow-500 to-orange-500 rounded-md flex items-center justify-center mx-auto mb-1 group-hover:scale-110 transition-transform">
+                            <svg class="w-3 h-3 text-white" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M19 7h-3V6a4 4 0 0 0-8 0v1H5a1 1 0 0 0-1 1v11a3 3 0 0 0 3 3h10a3 3 0 0 0 3-3V8a1 1 0 0 0-1-1zM10 6a2 2 0 0 1 4 0v1h-4V6zm8 13a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V9h2v1a1 1 0 0 0 2 0V9h4v1a1 1 0 0 0 2 0V9h2v10z"/>
+                            </svg>
+                        </div>
+                        <div class="font-bold text-gray-800 text-xs mb-0.5">রিস্টকিং অর্ডার</div>
+                        <div class="text-gray-500 text-xs">Restock Management</div>
+                    </button>
+                    
+                    <button onclick="showScreen('salesScreen')" class="premium-card p-2 rounded-lg hover-lift text-center group">
+                        <div class="w-6 h-6 bg-gradient-to-br from-purple-500 to-pink-500 rounded-md flex items-center justify-center mx-auto mb-1 group-hover:scale-110 transition-transform">
+                            <svg class="w-3 h-3 text-white" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M3 13h8V3H3v10zm0 8h8v-6H3v6zm10 0h8V11h-8v10zm0-18v6h8V3h-8z"/>
+                            </svg>
+                        </div>
+                        <div class="font-bold text-gray-800 text-xs mb-0.5">বিক্রয় ডেটা</div>
+                        <div class="text-gray-500 text-xs">Sales Analytics</div>
+                    </button>
+                    
+                    <button onclick="showScreen('posScreen')" class="premium-card p-2 rounded-lg hover-lift text-center group">
+                        <div class="w-6 h-6 bg-gradient-to-br from-green-500 to-emerald-500 rounded-md flex items-center justify-center mx-auto mb-1 group-hover:scale-110 transition-transform">
+                            <svg class="w-3 h-3 text-white" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M7 18c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zM1 2v2h2l3.6 7.59-1.35 2.45c-.16.28-.25.61-.25.96 0 1.1.9 2 2 2h12v-2H7.42c-.14 0-.25-.11-.25-.25l.03-.12L8.1 13h7.45c.75 0 1.41-.41 1.75-1.03L21.7 4H5.21l-.94-2H1zm16 16c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"/>
+                            </svg>
+                        </div>
+                        <div class="font-bold text-gray-800 text-xs mb-0.5">POS বিক্রয়</div>
+                        <div class="text-gray-500 text-xs">Point of Sale</div>
+                    </button>
+                    
+                    <button onclick="showScreen('analyticsScreen')" class="premium-card p-2 rounded-lg hover-lift text-center group">
+                        <div class="w-6 h-6 bg-gradient-to-br from-teal-500 to-cyan-500 rounded-md flex items-center justify-center mx-auto mb-1 group-hover:scale-110 transition-transform">
+                            <svg class="w-3 h-3 text-white" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zM9 17H7v-7h2v7zm4 0h-2V7h2v10zm4 0h-2v-4h2v4z"/>
+                            </svg>
+                        </div>
+                        <div class="font-bold text-gray-800 text-xs mb-0.5">ব্যবসায়িক বিশ্লেষণ</div>
+                        <div class="text-gray-500 text-xs">Business Intelligence</div>
+                    </button>
+                    
+                    <button onclick="showScreen('customerInsightsScreen')" class="premium-card p-2 rounded-lg hover-lift text-center group">
+                        <div class="w-6 h-6 bg-gradient-to-br from-pink-500 to-rose-500 rounded-md flex items-center justify-center mx-auto mb-1 group-hover:scale-110 transition-transform">
+                            <svg class="w-3 h-3 text-white" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M16 4c0-1.11.89-2 2-2s2 .89 2 2-.89 2-2 2-2-.89-2-2zm4 18v-6h2.5l-2.54-7.63A1.5 1.5 0 0 0 18.54 8H16c-.8 0-1.54.37-2.01.99l-2.54 3.38c-.36.48-.85.63-1.37.63H8v2h2.08c1.18 0 2.3-.43 3.16-1.22L14.5 12H16v10h4z"/>
+                            </svg>
+                        </div>
+                        <div class="font-bold text-gray-800 text-xs mb-0.5">গ্রাহক তথ্য</div>
+                        <div class="text-gray-500 text-xs">Customer Analytics</div>
+                    </button>
+                    
+                    <button onclick="showScreen('messagingScreen')" class="premium-card p-2 rounded-lg hover-lift text-center group">
+                        <div class="w-6 h-6 bg-gradient-to-br from-indigo-500 to-purple-500 rounded-md flex items-center justify-center mx-auto mb-1 group-hover:scale-110 transition-transform">
+                            <svg class="w-3 h-3 text-white" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M20 2H4c-1.1 0-1.99.9-1.99 2L2 22l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm-2 12H6v-2h12v2zm0-3H6V9h12v2zm0-3H6V6h12v2z"/>
+                            </svg>
+                        </div>
+                        <div class="font-bold text-gray-800 text-xs mb-0.5">মেসেজিং</div>
+                        <div class="text-gray-500 text-xs">Communication Hub</div>
+                    </button>
+                    
+                    <button onclick="showScreen('settingsScreen')" class="premium-card p-2 rounded-lg hover-lift text-center group">
+                        <div class="w-6 h-6 bg-gradient-to-br from-gray-500 to-gray-600 rounded-md flex items-center justify-center mx-auto mb-1 group-hover:scale-110 transition-transform">
+                            <svg class="w-3 h-3 text-white" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M12 15.5A3.5 3.5 0 0 1 8.5 12A3.5 3.5 0 0 1 12 8.5a3.5 3.5 0 0 1 3.5 3.5 3.5 3.5 0 0 1-3.5 3.5m7.43-2.53c.04-.32.07-.64.07-.97 0-.33-.03-.66-.07-1l2.11-1.63c.19-.15.24-.42.12-.64l-2-3.46c-.12-.22-.39-.31-.61-.22l-2.49 1c-.52-.39-1.06-.73-1.69-.98l-.37-2.65A.506.506 0 0 0 14 2h-4c-.25 0-.46.18-.5.42l-.37 2.65c-.63.25-1.17.59-1.69.98l-2.49-1c-.22-.09-.49 0-.61.22l-2 3.46c-.13.22-.07.49.12.64L4.57 11c-.04.34-.07.67-.07 1 0 .33.03.65.07.97l-2.11 1.66c-.19.15-.25.42-.12.64l2 3.46c.12.22.39.3.61.22l2.49-1.01c.52.4 1.06.74 1.69.99l.37 2.65c.04.24.25.42.5.42h4c.25 0 .46-.18.5-.42l.37-2.65c.63-.26 1.17-.59 1.69-.99l2.49 1.01c.22.08.49 0 .61-.22l2-3.46c.12-.22.07-.49-.12-.64l-2.11-1.66Z"/>
+                            </svg>
+                        </div>
+                        <div class="font-bold text-gray-800 text-xs mb-0.5">সেটিংস</div>
+                        <div class="text-gray-500 text-xs">System Settings</div>
+                    </button>
+                </div>
+                
+                <!-- Main Scan Button at Bottom -->
+                <button onclick="showScreen('scanScreen')" class="w-full success-gradient text-white p-3 rounded-lg shadow-xl hover-lift relative overflow-hidden mt-4">
+                    <div class="absolute inset-0 bg-white opacity-0 hover:opacity-10 transition-opacity duration-300"></div>
+                    <div class="flex items-center justify-center space-x-2 relative z-10">
+                        <div class="w-8 h-8 bg-white bg-opacity-20 rounded-lg flex items-center justify-center">
+                            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M3 4h2v16H3V4zm4 0h1v16H7V4zm3 0h1v16h-1V4zm3 0h2v16h-2V4zm4 0h1v16h-1V4zm3 0h2v16h-2V4z"/>
+                            </svg>
+                        </div>
+                        <div class="text-left">
+                            <div class="text-sm font-bold">বারকোড স্ক্যান করুন</div>
+                            <div class="text-green-100 text-xs font-medium">Quick Product Scanning</div>
+                        </div>
+                    </div>
+                </button>
+            </div>
+        </div>
+        
+        <!-- Barcode Scanning Screen -->
+        <div id="scanScreen" class="screen hidden">
+            <div class="bg-green-600 text-white p-4 flex items-center">
+                <button onclick="showScreen('homeScreen')" class="mr-3">
+                    <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/>
+                    </svg>
+                </button>
+                <h2 class="text-xl font-bold">পণ্য স্ক্যান করুন</h2>
+            </div>
+            
+            <div class="p-6 text-center">
+                <div class="mb-6">
+                    <p class="text-lg mb-4">বারকোড স্ক্যান করুন</p>
+                    <p class="text-gray-600">Scan Barcode</p>
+                </div>
+                
+                <!-- Scan Area -->
+                <div class="scan-box w-64 h-64 mx-auto mb-6 flex items-center justify-center bg-green-50 rounded-lg">
+                    <svg class="w-24 h-24 text-green-500" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M3 4h2v16H3V4zm4 0h1v16H7V4zm3 0h1v16h-1V4zm3 0h2v16h-2V4zm4 0h1v16h-1V4zm3 0h2v16h-2V4z"/>
+                    </svg>
+                </div>
+                
+                <button onclick="simulateScan()" class="bg-green-500 hover:bg-green-600 text-white px-8 py-3 rounded-lg font-semibold shadow-lg">
+                    স্ক্যান শুরু করুন
+                </button>
+                
+                <!-- Scan Result -->
+                <div id="scanResult" class="hidden mt-6 p-4 bg-blue-50 rounded-lg">
+                    <div class="text-green-600 font-bold mb-2">পণ্য স্ক্যান সফল ✓</div>
+                    <div class="flex items-center space-x-4">
+                        <div class="w-16 h-16 bg-white rounded-lg p-2 shadow">
+                            <svg class="w-full h-full text-blue-600" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
+                            </svg>
+                        </div>
+                        <div class="text-left space-y-1">
+                            <div><strong>পণ্যের নাম:</strong> স্মার্ট ফ্যান</div>
+                            <div><strong>স্টক:</strong> ২৫ পিস</div>
+                            <div><strong>দাম:</strong> ৪,৫০০ টাকা</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Stock Level Screen -->
+        <div id="stockScreen" class="screen hidden">
+            <div class="bg-blue-600 text-white p-4 flex items-center">
+                <button onclick="showScreen('homeScreen')" class="mr-3">
+                    <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/>
+                    </svg>
+                </button>
+                <h2 class="text-xl font-bold">স্টক লেভেল</h2>
+            </div>
+            
+            <div class="p-6">
+                <!-- Stock Items -->
+                <div class="space-y-4">
+                    <div class="bg-white p-4 rounded-lg shadow border-l-4 border-green-500">
+                        <div class="flex items-center space-x-3 mb-2">
+                            <div class="w-12 h-12 bg-blue-100 rounded-lg p-2">
+                                <svg class="w-full h-full text-blue-600" fill="currentColor" viewBox="0 0 24 24">
+                                    <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+                                </svg>
+                            </div>
+                            <div class="flex-1">
+                                <div class="flex justify-between items-center">
+                                    <h3 class="font-semibold">স্মার্ট ফ্যান</h3>
+                                    <span class="text-green-600 font-bold">২৫ পিস</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="w-full bg-gray-200 rounded-full h-3">
+                            <div class="progress-bar bg-green-500 h-3 rounded-full" style="width: 75%"></div>
+                        </div>
+                        <p class="text-sm text-gray-600 mt-1">স্টকে ২৫ পণ্য অবশিষ্ট</p>
+                    </div>
+                    
+                    <div class="bg-white p-4 rounded-lg shadow border-l-4 border-yellow-500">
+                        <div class="flex items-center space-x-3 mb-2">
+                            <div class="w-12 h-12 bg-yellow-100 rounded-lg p-2">
+                                <svg class="w-full h-full text-yellow-600" fill="currentColor" viewBox="0 0 24 24">
+                                    <path d="M9 21c0 .5.4 1 1 1h4c.6 0 1-.5 1-1v-1H9v1zm3-19C8.1 2 5 5.1 5 9c0 2.4 1.2 4.5 3 5.7V17c0 .5.4 1 1 1h6c.6 0 1-.5 1-1v-2.3c1.8-1.3 3-3.4 3-5.7 0-3.9-3.1-7-7-7z"/>
+                                </svg>
+                            </div>
+                            <div class="flex-1">
+                                <div class="flex justify-between items-center">
+                                    <h3 class="font-semibold">LED বাল্ব</h3>
+                                    <span class="text-yellow-600 font-bold">৮ পিস</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="w-full bg-gray-200 rounded-full h-3">
+                            <div class="progress-bar bg-yellow-500 h-3 rounded-full" style="width: 30%"></div>
+                        </div>
+                        <p class="text-sm text-yellow-600 mt-1">স্টক কম হয়েছে, অর্ডার করুন</p>
+                    </div>
+                    
+                    <div class="bg-white p-4 rounded-lg shadow border-l-4 border-red-500">
+                        <div class="flex items-center space-x-3 mb-2">
+                            <div class="w-12 h-12 bg-red-100 rounded-lg p-2">
+                                <svg class="w-full h-full text-red-600" fill="currentColor" viewBox="0 0 24 24">
+                                    <path d="M1 9l2 2c4.97-4.97 13.03-4.97 18 0l2-2C16.93 2.93 7.07 2.93 1 9zm8 8l3 3 3-3c-1.65-1.66-4.34-1.66-6 0zm-4-4l2 2c2.76-2.76 7.24-2.76 10 0l2-2C15.14 9.14 8.87 9.14 5 13z"/>
+                                </svg>
+                            </div>
+                            <div class="flex-1">
+                                <div class="flex justify-between items-center">
+                                    <h3 class="font-semibold">ওয়াইফাই রাউটার</h3>
+                                    <span class="text-red-600 font-bold">৩ পিস</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="w-full bg-gray-200 rounded-full h-3">
+                            <div class="progress-bar bg-red-500 h-3 rounded-full" style="width: 10%"></div>
+                        </div>
+                        <p class="text-sm text-red-600 mt-1">জরুরি রিস্টকিং প্রয়োজন</p>
+                    </div>
+                </div>
+                
+                <div class="mt-6 space-y-3">
+                    <button onclick="showScreen('restockScreen')" class="w-full bg-yellow-500 hover:bg-yellow-600 text-white py-3 rounded-lg font-semibold">
+                        রিস্টকিং অর্ডার পাঠান
+                    </button>
+                    <button class="w-full bg-blue-500 hover:bg-blue-600 text-white py-3 rounded-lg font-semibold">
+                        স্টক বিস্তারিত দেখুন
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Sales Data Screen -->
+        <div id="salesScreen" class="screen hidden">
+            <div class="bg-purple-600 text-white p-4 flex items-center">
+                <button onclick="showScreen('homeScreen')" class="mr-3">
+                    <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/>
+                    </svg>
+                </button>
+                <h2 class="text-xl font-bold">বিক্রয় ডেটা</h2>
+            </div>
+            
+            <div class="p-6">
+                <!-- Sales Overview -->
+                <div class="grid grid-cols-3 gap-3 mb-6">
+                    <div class="bg-green-100 p-4 rounded-lg text-center">
+                        <div class="text-2xl font-bold text-green-600">৫,২৫০</div>
+                        <div class="text-sm text-green-700">আজকের বিক্রয়</div>
+                    </div>
+                    <div class="bg-blue-100 p-4 rounded-lg text-center">
+                        <div class="text-2xl font-bold text-blue-600">৩৫,৮০০</div>
+                        <div class="text-sm text-blue-700">সপ্তাহের বিক্রয়</div>
+                    </div>
+                    <div class="bg-purple-100 p-4 rounded-lg text-center">
+                        <div class="text-2xl font-bold text-purple-600">১,৪৫,২০০</div>
+                        <div class="text-sm text-purple-700">মাসের বিক্রয়</div>
+                    </div>
+                </div>
+                
+                <!-- Top Selling Products -->
+                <div class="bg-white rounded-lg shadow p-4">
+                    <h3 class="font-bold mb-4">সর্বাধিক বিক্রি হওয়া পণ্য</h3>
+                    <div class="space-y-4">
+                        <div class="flex items-center justify-between">
+                            <div class="flex items-center space-x-3">
+                                <div class="w-8 h-8 bg-blue-100 rounded p-1">
+                                    <svg class="w-full h-full text-blue-600" fill="currentColor" viewBox="0 0 24 24">
+                                        <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+                                    </svg>
+                                </div>
+                                <span>স্মার্ট ফ্যান</span>
+                            </div>
+                            <div class="flex items-center">
+                                <div class="w-20 bg-gray-200 rounded-full h-2 mr-2">
+                                    <div class="chart-bar bg-green-500 h-2 rounded-full" style="height: 8px; width: 85%"></div>
+                                </div>
+                                <span class="text-sm">৮৫%</span>
+                            </div>
+                        </div>
+                        <div class="flex items-center justify-between">
+                            <div class="flex items-center space-x-3">
+                                <div class="w-8 h-8 bg-yellow-100 rounded p-1">
+                                    <svg class="w-full h-full text-yellow-600" fill="currentColor" viewBox="0 0 24 24">
+                                        <path d="M9 21c0 .5.4 1 1 1h4c.6 0 1-.5 1-1v-1H9v1zm3-19C8.1 2 5 5.1 5 9c0 2.4 1.2 4.5 3 5.7V17c0 .5.4 1 1 1h6c.6 0 1-.5 1-1v-2.3c1.8-1.3 3-3.4 3-5.7 0-3.9-3.1-7-7-7z"/>
+                                    </svg>
+                                </div>
+                                <span>LED বাল্ব</span>
+                            </div>
+                            <div class="flex items-center">
+                                <div class="w-20 bg-gray-200 rounded-full h-2 mr-2">
+                                    <div class="chart-bar bg-blue-500 h-2 rounded-full" style="height: 8px; width: 65%"></div>
+                                </div>
+                                <span class="text-sm">৬৫%</span>
+                            </div>
+                        </div>
+                        <div class="flex items-center justify-between">
+                            <div class="flex items-center space-x-3">
+                                <div class="w-8 h-8 bg-red-100 rounded p-1">
+                                    <svg class="w-full h-full text-red-600" fill="currentColor" viewBox="0 0 24 24">
+                                        <path d="M1 9l2 2c4.97-4.97 13.03-4.97 18 0l2-2C16.93 2.93 7.07 2.93 1 9zm8 8l3 3 3-3c-1.65-1.66-4.34-1.66-6 0zm-4-4l2 2c2.76-2.76 7.24-2.76 10 0l2-2C15.14 9.14 8.87 9.14 5 13z"/>
+                                    </svg>
+                                </div>
+                                <span>ওয়াইফাই রাউটার</span>
+                            </div>
+                            <div class="flex items-center">
+                                <div class="w-20 bg-gray-200 rounded-full h-2 mr-2">
+                                    <div class="chart-bar bg-yellow-500 h-2 rounded-full" style="height: 8px; width: 45%"></div>
+                                </div>
+                                <span class="text-sm">৪৫%</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Restocking Screen -->
+        <div id="restockScreen" class="screen hidden">
+            <div class="bg-yellow-600 text-white p-4 flex items-center">
+                <button onclick="showScreen('homeScreen')" class="mr-3">
+                    <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/>
+                    </svg>
+                </button>
+                <h2 class="text-xl font-bold">রিস্টকিং অর্ডার</h2>
+            </div>
+            
+            <div class="p-6">
+                <!-- Low Stock Alerts -->
+                <div class="bg-red-50 border-l-4 border-red-500 p-4 mb-6">
+                    <div class="flex items-center">
+                        <svg class="w-6 h-6 text-red-500 mr-2" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M1 21h22L12 2 1 21zm12-3h-2v-2h2v2zm0-4h-2v-4h2v4z"/>
+                        </svg>
+                        <div>
+                            <h3 class="font-bold text-red-800">স্টক কম সতর্কতা</h3>
+                            <p class="text-red-700">২টি পণ্যের স্টক কম হয়েছে</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Restock Items -->
+                <div class="space-y-4 mb-6">
+                    <div class="bg-white p-4 rounded-lg shadow border border-yellow-200">
+                        <div class="flex items-center space-x-3 mb-2">
+                            <div class="w-10 h-10 bg-yellow-100 rounded p-1">
+                                <svg class="w-full h-full text-yellow-600" fill="currentColor" viewBox="0 0 24 24">
+                                    <path d="M9 21c0 .5.4 1 1 1h4c.6 0 1-.5 1-1v-1H9v1zm3-19C8.1 2 5 5.1 5 9c0 2.4 1.2 4.5 3 5.7V17c0 .5.4 1 1 1h6c.6 0 1-.5 1-1v-2.3c1.8-1.3 3-3.4 3-5.7 0-3.9-3.1-7-7-7z"/>
+                                </svg>
+                            </div>
+                            <div class="flex-1">
+                                <div class="flex justify-between items-center">
+                                    <h3 class="font-semibold">LED বাল্ব</h3>
+                                    <span class="text-yellow-600 font-bold">৮ পিস বাকি</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="flex items-center justify-between">
+                            <span class="text-sm text-gray-600">প্রয়োজন: ৫০ পিস</span>
+                            <input type="checkbox" class="w-5 h-5 text-yellow-600" checked>
+                        </div>
+                    </div>
+                    
+                    <div class="bg-white p-4 rounded-lg shadow border border-red-200">
+                        <div class="flex items-center space-x-3 mb-2">
+                            <div class="w-10 h-10 bg-red-100 rounded p-1">
+                                <svg class="w-full h-full text-red-600" fill="currentColor" viewBox="0 0 24 24">
+                                    <path d="M1 9l2 2c4.97-4.97 13.03-4.97 18 0l2-2C16.93 2.93 7.07 2.93 1 9zm8 8l3 3 3-3c-1.65-1.66-4.34-1.66-6 0zm-4-4l2 2c2.76-2.76 7.24-2.76 10 0l2-2C15.14 9.14 8.87 9.14 5 13z"/>
+                                </svg>
+                            </div>
+                            <div class="flex-1">
+                                <div class="flex justify-between items-center">
+                                    <h3 class="font-semibold">ওয়াইফাই রাউটার</h3>
+                                    <span class="text-red-600 font-bold">৩ পিস বাকি</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="flex items-center justify-between">
+                            <span class="text-sm text-gray-600">প্রয়োজন: ২০ পিস</span>
+                            <input type="checkbox" class="w-5 h-5 text-red-600" checked>
+                        </div>
+                    </div>
+                </div>
+                
+                <button onclick="sendRestockOrder()" class="w-full bg-yellow-500 hover:bg-yellow-600 text-white py-4 rounded-lg font-bold text-lg shadow-lg">
+                    রিস্টকিং পাঠান
+                </button>
+                
+                <!-- Success Message -->
+                <div id="restockSuccess" class="hidden mt-4 p-4 bg-green-50 border border-green-200 rounded-lg">
+                    <div class="flex items-center text-green-800">
+                        <svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/>
+                        </svg>
+                        <span class="font-semibold">স্টক কম, রিস্টকিং অর্ডার পাঠানো হয়েছে</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- POS System Screen -->
+        <div id="posScreen" class="screen hidden">
+            <div class="bg-green-600 text-white p-4 flex items-center">
+                <button onclick="showScreen('homeScreen')" class="mr-3">
+                    <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/>
+                    </svg>
+                </button>
+                <h2 class="text-xl font-bold">POS সিস্টেম</h2>
+            </div>
+            
+            <div class="p-4">
+                <!-- Product Selection -->
+                <div class="mb-4">
+                    <h3 class="font-bold mb-3">পণ্য নির্বাচন করুন</h3>
+                    <div class="grid grid-cols-2 gap-3">
+                        <button onclick="addToCart('smart_fan', 'স্মার্ট ফ্যান', 4500)" class="bg-blue-100 p-3 rounded-lg text-left hover:bg-blue-200 transition-all">
+                            <div class="flex items-center space-x-2">
+                                <div class="w-8 h-8 bg-blue-500 rounded p-1">
+                                    <svg class="w-full h-full text-white" fill="currentColor" viewBox="0 0 24 24">
+                                        <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+                                    </svg>
+                                </div>
+                                <div>
+                                    <div class="font-semibold text-sm">স্মার্ট ফ্যান</div>
+                                    <div class="text-xs text-gray-600">৪,৫০০ টাকা</div>
+                                </div>
+                            </div>
+                        </button>
+                        
+                        <button onclick="addToCart('led_bulb', 'LED বাল্ব', 250)" class="bg-yellow-100 p-3 rounded-lg text-left hover:bg-yellow-200 transition-all">
+                            <div class="flex items-center space-x-2">
+                                <div class="w-8 h-8 bg-yellow-500 rounded p-1">
+                                    <svg class="w-full h-full text-white" fill="currentColor" viewBox="0 0 24 24">
+                                        <path d="M9 21c0 .5.4 1 1 1h4c.6 0 1-.5 1-1v-1H9v1zm3-19C8.1 2 5 5.1 5 9c0 2.4 1.2 4.5 3 5.7V17c0 .5.4 1 1 1h6c.6 0 1-.5 1-1v-2.3c1.8-1.3 3-3.4 3-5.7 0-3.9-3.1-7-7-7z"/>
+                                    </svg>
+                                </div>
+                                <div>
+                                    <div class="font-semibold text-sm">LED বাল্ব</div>
+                                    <div class="text-xs text-gray-600">২৫০ টাকা</div>
+                                </div>
+                            </div>
+                        </button>
+                        
+                        <button onclick="addToCart('wifi_router', 'ওয়াইফাই রাউটার', 2800)" class="bg-red-100 p-3 rounded-lg text-left hover:bg-red-200 transition-all">
+                            <div class="flex items-center space-x-2">
+                                <div class="w-8 h-8 bg-red-500 rounded p-1">
+                                    <svg class="w-full h-full text-white" fill="currentColor" viewBox="0 0 24 24">
+                                        <path d="M1 9l2 2c4.97-4.97 13.03-4.97 18 0l2-2C16.93 2.93 7.07 2.93 1 9zm8 8l3 3 3-3c-1.65-1.66-4.34-1.66-6 0zm-4-4l2 2c2.76-2.76 7.24-2.76 10 0l2-2C15.14 9.14 8.87 9.14 5 13z"/>
+                                    </svg>
+                                </div>
+                                <div>
+                                    <div class="font-semibold text-sm">ওয়াইফাই রাউটার</div>
+                                    <div class="text-xs text-gray-600">২,৮০০ টাকা</div>
+                                </div>
+                            </div>
+                        </button>
+                        
+                        <button onclick="addToCart('power_bank', 'পাওয়ার ব্যাংক', 1200)" class="bg-purple-100 p-3 rounded-lg text-left hover:bg-purple-200 transition-all">
+                            <div class="flex items-center space-x-2">
+                                <div class="w-8 h-8 bg-purple-500 rounded p-1">
+                                    <svg class="w-full h-full text-white" fill="currentColor" viewBox="0 0 24 24">
+                                        <path d="M15.67 4H14V2h-4v2H8.33C7.6 4 7 4.6 7 5.33v15.33C7 21.4 7.6 22 8.33 22h7.33c.74 0 1.34-.6 1.34-1.33V5.33C17 4.6 16.4 4 15.67 4z"/>
+                                    </svg>
+                                </div>
+                                <div>
+                                    <div class="font-semibold text-sm">পাওয়ার ব্যাংক</div>
+                                    <div class="text-xs text-gray-600">১,২০০ টাকা</div>
+                                </div>
+                            </div>
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- Product Ordering Section -->
+                <div class="bg-white rounded-lg shadow p-4 mb-4">
+                    <h3 class="font-bold mb-3 flex items-center">
+                        <svg class="w-5 h-5 text-indigo-600 mr-2" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M19 7h-3V6a4 4 0 0 0-8 0v1H5a1 1 0 0 0-1 1v11a3 3 0 0 0 3 3h10a3 3 0 0 0 3-3V8a1 1 0 0 0-1-1zM10 6a2 2 0 0 1 4 0v1h-4V6zm8 13a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V9h2v1a1 1 0 0 0 2 0V9h4v1a1 1 0 0 0 2 0V9h2v10z"/>
+                        </svg>
+                        <span>হেড অফিস থেকে পণ্য অর্ডার</span>
+                    </h3>
+                    
+                    <div class="grid grid-cols-2 gap-3 mb-4">
+                        <button onclick="orderProduct('smart_fan', 'স্মার্ট ফ্যান', 4200)" class="bg-blue-50 p-3 rounded-lg text-left hover:bg-blue-100 transition-all border border-blue-200">
+                            <div class="flex items-center space-x-2">
+                                <div class="w-6 h-6 bg-blue-500 rounded p-1">
+                                    <svg class="w-full h-full text-white" fill="currentColor" viewBox="0 0 24 24">
+                                        <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+                                    </svg>
+                                </div>
+                                <div>
+                                    <div class="font-semibold text-xs">স্মার্ট ফ্যান</div>
+                                    <div class="text-xs text-gray-600">৪,২০০ টাকা (হোলসেল)</div>
+                                </div>
+                            </div>
+                        </button>
+                        
+                        <button onclick="orderProduct('led_bulb', 'LED বাল্ব', 200)" class="bg-yellow-50 p-3 rounded-lg text-left hover:bg-yellow-100 transition-all border border-yellow-200">
+                            <div class="flex items-center space-x-2">
+                                <div class="w-6 h-6 bg-yellow-500 rounded p-1">
+                                    <svg class="w-full h-full text-white" fill="currentColor" viewBox="0 0 24 24">
+                                        <path d="M9 21c0 .5.4 1 1 1h4c.6 0 1-.5 1-1v-1H9v1zm3-19C8.1 2 5 5.1 5 9c0 2.4 1.2 4.5 3 5.7V17c0 .5.4 1 1 1h6c.6 0 1-.5 1-1v-2.3c1.8-1.3 3-3.4 3-5.7 0-3.9-3.1-7-7-7z"/>
+                                    </svg>
+                                </div>
+                                <div>
+                                    <div class="font-semibold text-xs">LED বাল্ব</div>
+                                    <div class="text-xs text-gray-600">২০০ টাকা (হোলসেল)</div>
+                                </div>
+                            </div>
+                        </button>
+                        
+                        <button onclick="orderProduct('power_bank', 'পাওয়ার ব্যাংক', 950)" class="bg-purple-50 p-3 rounded-lg text-left hover:bg-purple-100 transition-all border border-purple-200">
+                            <div class="flex items-center space-x-2">
+                                <div class="w-6 h-6 bg-purple-500 rounded p-1">
+                                    <svg class="w-full h-full text-white" fill="currentColor" viewBox="0 0 24 24">
+                                        <path d="M15.67 4H14V2h-4v2H8.33C7.6 4 7 4.6 7 5.33v15.33C7 21.4 7.6 22 8.33 22h7.33c.74 0 1.34-.6 1.34-1.33V5.33C17 4.6 16.4 4 15.67 4z"/>
+                                    </svg>
+                                </div>
+                                <div>
+                                    <div class="font-semibold text-xs">পাওয়ার ব্যাংক</div>
+                                    <div class="text-xs text-gray-600">৯৫০ টাকা (হোলসেল)</div>
+                                </div>
+                            </div>
+                        </button>
+                        
+                        <button onclick="orderProduct('bluetooth_speaker', 'ব্লুটুথ স্পিকার', 1800)" class="bg-green-50 p-3 rounded-lg text-left hover:bg-green-100 transition-all border border-green-200">
+                            <div class="flex items-center space-x-2">
+                                <div class="w-6 h-6 bg-green-500 rounded p-1">
+                                    <svg class="w-full h-full text-white" fill="currentColor" viewBox="0 0 24 24">
+                                        <path d="M14,3.23V5.29C16.89,6.15 19,8.83 19,12C19,15.17 16.89,17.84 14,18.7V20.77C18,19.86 21,16.28 21,12C21,7.72 18,4.14 14,3.23M16.5,12C16.5,10.23 15.5,8.71 14,7.97V16C15.5,15.29 16.5,13.76 16.5,12M3,9V15H7L12,20V4L7,9H3Z"/>
+                                    </svg>
+                                </div>
+                                <div>
+                                    <div class="font-semibold text-xs">ব্লুটুথ স্পিকার</div>
+                                    <div class="text-xs text-gray-600">১,৮০০ টাকা (হোলসেল)</div>
+                                </div>
+                            </div>
+                        </button>
+                    </div>
+                    
+                    <button onclick="showOrderHistory()" class="w-full bg-indigo-500 hover:bg-indigo-600 text-white py-2 rounded-lg font-semibold text-sm">
+                        অর্ডার হিস্টরি দেখুন
+                    </button>
+                </div>
+                
+                <!-- Shopping Cart -->
+                <div class="bg-white rounded-lg shadow p-4 mb-4">
+                    <h3 class="font-bold mb-3 flex items-center justify-between">
+                        <span>শপিং কার্ট</span>
+                        <button onclick="clearCart()" class="text-red-500 text-sm">সব মুছুন</button>
+                    </h3>
+                    <div id="cartItems" class="space-y-2 mb-4">
+                        <div class="text-gray-500 text-center py-4">কার্ট খালি</div>
+                    </div>
+                    
+                    <!-- Total -->
+                    <div class="border-t pt-3">
+                        <div class="flex justify-between items-center mb-2">
+                            <span class="font-semibold">মোট:</span>
+                            <span id="totalAmount" class="font-bold text-lg">০ টাকা</span>
+                        </div>
+                        <div class="flex justify-between items-center mb-4">
+                            <span class="text-sm text-gray-600">ভ্যাট (৫%):</span>
+                            <span id="vatAmount" class="text-sm">০ টাকা</span>
+                        </div>
+                        <div class="flex justify-between items-center mb-4 text-lg font-bold border-t pt-2">
+                            <span>সর্বমোট:</span>
+                            <span id="grandTotal">০ টাকা</span>
+                        </div>
+                        
+                        <!-- Payment Method -->
+                        <div class="mb-4">
+                            <label class="block text-sm font-medium mb-2">পেমেন্ট পদ্ধতি</label>
+                            <select id="paymentMethod" class="w-full p-2 border rounded-lg">
+                                <option value="cash">নগদ</option>
+                                <option value="card">কার্ড</option>
+                                <option value="mobile">মোবাইল ব্যাংকিং</option>
+                            </select>
+                        </div>
+                        
+                        <button onclick="processPayment()" id="checkoutBtn" class="w-full bg-green-500 hover:bg-green-600 text-white py-3 rounded-lg font-bold disabled:bg-gray-300" disabled>
+                            পেমেন্ট সম্পন্ন করুন
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Messaging Screen -->
+        <div id="messagingScreen" class="screen hidden">
+            <div class="bg-indigo-600 text-white p-4 flex items-center">
+                <button onclick="showScreen('homeScreen')" class="mr-3">
+                    <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/>
+                    </svg>
+                </button>
+                <h2 class="text-xl font-bold">মেসেজিং সেন্টার</h2>
+            </div>
+            
+            <div class="p-6">
+                <!-- Contact Options -->
+                <div class="grid grid-cols-2 gap-4 mb-6">
+                    <button onclick="openChat('headoffice')" class="bg-blue-500 hover:bg-blue-600 text-white p-4 rounded-lg shadow transition-all">
+                        <div class="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-2">
+                            <svg class="w-6 h-6 text-blue-600" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M12 7V3H2v18h20V7H12zM6 19H4v-2h2v2zm0-4H4v-2h2v2zm0-4H4V9h2v2zm0-4H4V5h2v2zm4 12H8v-2h2v2zm0-4H8v-2h2v2zm0-4H8V9h2v2zm0-4H8V5h2v2zm10 12h-8v-2h2v-2h-2v-2h2v-2h-2V9h8v10z"/>
+                            </svg>
+                        </div>
+                        <div class="font-semibold text-sm">হেড অফিস</div>
+                        <div class="text-blue-100 text-xs">Head Office</div>
+                    </button>
+                    
+                    <button onclick="openChat('warehouse')" class="bg-orange-500 hover:bg-orange-600 text-white p-4 rounded-lg shadow transition-all">
+                        <div class="w-12 h-12 bg-orange-100 rounded-full flex items-center justify-center mx-auto mb-2">
+                            <svg class="w-6 h-6 text-orange-600" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M12 3L2 12h3v8h14v-8h3L12 3zm0 2.84L18.16 12H17v6H7v-6H5.84L12 5.84z"/>
+                            </svg>
+                        </div>
+                        <div class="font-semibold text-sm">ওয়্যারহাউস</div>
+                        <div class="text-orange-100 text-xs">Warehouse</div>
+                    </button>
+                </div>
+                
+                <!-- Recent Messages -->
+                <div class="bg-white rounded-lg shadow p-4 mb-6">
+                    <h3 class="font-bold mb-4">সাম্প্রতিক বার্তা</h3>
+                    <div class="space-y-3">
+                        <div class="flex items-center space-x-3 p-3 bg-blue-50 rounded-lg">
+                            <div class="w-10 h-10 bg-blue-500 rounded-full flex items-center justify-center">
+                                <svg class="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 24 24">
+                                    <path d="M12 7V3H2v18h20V7H12zM6 19H4v-2h2v2zm0-4H4v-2h2v2zm0-4H4V9h2v2zm0-4H4V5h2v2zm4 12H8v-2h2v2zm0-4H8v-2h2v2zm0-4H8V9h2v2zm0-4H8V5h2v2zm10 12h-8v-2h2v-2h-2v-2h2v-2h-2V9h8v10z"/>
+                                </svg>
+                            </div>
+                            <div class="flex-1">
+                                <div class="font-semibold text-sm">হেড অফিস</div>
+                                <div class="text-gray-600 text-xs">নতুন পণ্যের ক্যাটালগ পাঠানো হয়েছে</div>
+                                <div class="text-gray-400 text-xs">২ ঘন্টা আগে</div>
+                            </div>
+                            <div class="w-3 h-3 bg-blue-500 rounded-full"></div>
+                        </div>
+                        
+                        <div class="flex items-center space-x-3 p-3 bg-orange-50 rounded-lg">
+                            <div class="w-10 h-10 bg-orange-500 rounded-full flex items-center justify-center">
+                                <svg class="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 24 24">
+                                    <path d="M12 3L2 12h3v8h14v-8h3L12 3zm0 2.84L18.16 12H17v6H7v-6H5.84L12 5.84z"/>
+                                </svg>
+                            </div>
+                            <div class="flex-1">
+                                <div class="font-semibold text-sm">ওয়্যারহাউস সেন্টার</div>
+                                <div class="text-gray-600 text-xs">নতুন পণ্য পাঠানো হয়েছে</div>
+                                <div class="text-gray-400 text-xs">৫ ঘন্টা আগে</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Quick Actions -->
+                <div class="space-y-3">
+                    <button onclick="sendQuickMessage('stock_update')" class="w-full bg-green-500 hover:bg-green-600 text-white py-3 rounded-lg font-semibold">
+                        স্টক আপডেট অনুরোধ
+                    </button>
+                    <button onclick="sendQuickMessage('delivery_status')" class="w-full bg-yellow-500 hover:bg-yellow-600 text-white py-3 rounded-lg font-semibold">
+                        ডেলিভারি স্ট্যাটাস চেক
+                    </button>
+                    <button onclick="sendQuickMessage('urgent_restock')" class="w-full bg-red-500 hover:bg-red-600 text-white py-3 rounded-lg font-semibold">
+                        জরুরি রিস্টক অনুরোধ
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Chat Interface -->
+        <div id="chatScreen" class="screen hidden">
+            <div id="chatHeader" class="bg-indigo-600 text-white p-4 flex items-center">
+                <button onclick="showScreen('messagingScreen')" class="mr-3">
+                    <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/>
+                    </svg>
+                </button>
+                <div class="flex items-center space-x-3">
+                    <div id="chatAvatar" class="w-10 h-10 bg-white rounded-full flex items-center justify-center">
+                        <svg class="w-5 h-5 text-indigo-600" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
+                        </svg>
+                    </div>
+                    <div>
+                        <h2 id="chatTitle" class="text-lg font-bold">ERP সিস্টেম</h2>
+                        <p id="chatStatus" class="text-indigo-200 text-sm">অনলাইন</p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Chat Messages -->
+            <div class="flex-1 p-4 space-y-4 bg-gray-50 min-h-96 max-h-96 overflow-y-auto" id="chatMessages">
+                <!-- Initial conversation based on chat type -->
+            </div>
+            
+            <!-- Message Input -->
+            <div class="p-4 bg-white border-t">
+                <div class="flex space-x-2">
+                    <input type="text" id="messageInput" placeholder="বার্তা লিখুন..." class="flex-1 p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent">
+                    <button onclick="sendMessage()" class="bg-indigo-500 hover:bg-indigo-600 text-white px-6 py-3 rounded-lg font-semibold">
+                        পাঠান
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Business Analytics Screen -->
+        <div id="analyticsScreen" class="screen hidden">
+            <div class="bg-teal-600 text-white p-4 flex items-center">
+                <button onclick="showScreen('homeScreen')" class="mr-3">
+                    <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/>
+                    </svg>
+                </button>
+                <h2 class="text-xl font-bold">ব্যবসায়িক বিশ্লেষণ</h2>
+            </div>
+            
+            <div class="p-6">
+                <!-- Monthly Performance -->
+                <div class="premium-card rounded-2xl p-6 mb-6">
+                    <div class="flex items-center mb-6">
+                        <div class="w-12 h-12 bg-gradient-to-br from-teal-500 to-cyan-500 rounded-xl flex items-center justify-center mr-4">
+                            <svg class="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zM9 17H7v-7h2v7zm4 0h-2V7h2v10zm4 0h-2v-4h2v4z"/>
+                            </svg>
+                        </div>
+                        <h3 class="text-xl font-bold text-gray-800">এই মাসের পারফরম্যান্স</h3>
+                    </div>
+                    
+                    <div class="grid grid-cols-2 gap-4">
+                        <div class="metric-card revenue-card p-4 rounded-xl text-center">
+                            <div class="text-3xl font-bold text-green-600 mb-1">৪,৮৫,২৫০</div>
+                            <div class="text-sm font-medium text-gray-700">মোট বিক্রয় (টাকা)</div>
+                        </div>
+                        <div class="metric-card customer-card p-4 rounded-xl text-center">
+                            <div class="text-3xl font-bold text-blue-600 mb-1">৬৮৫</div>
+                            <div class="text-sm font-medium text-gray-700">মোট গ্রাহক</div>
+                        </div>
+                        <div class="metric-card growth-card p-4 rounded-xl text-center">
+                            <div class="text-3xl font-bold text-purple-600 mb-1">৭০৮</div>
+                            <div class="text-sm font-medium text-gray-700">গড় বিক্রয়/দিন</div>
+                        </div>
+                        <div class="metric-card profit-card p-4 rounded-xl text-center">
+                            <div class="text-3xl font-bold text-orange-600 mb-1">২৩%</div>
+                            <div class="text-sm font-medium text-gray-700">লাভ বৃদ্ধি</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Top Selling Products This Month -->
+                <div class="bg-white rounded-lg shadow p-4 mb-6">
+                    <h3 class="font-bold mb-4 flex items-center">
+                        <svg class="w-5 h-5 text-yellow-600 mr-2" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+                        </svg>
+                        এই মাসের সর্বাধিক বিক্রিত পণ্য
+                    </h3>
+                    
+                    <div class="space-y-3">
+                        <div class="flex items-center justify-between p-3 bg-yellow-50 rounded-lg border-l-4 border-yellow-500">
+                            <div class="flex items-center space-x-3">
+                                <div class="w-10 h-10 bg-yellow-500 rounded-lg p-2">
+                                    <svg class="w-full h-full text-white" fill="currentColor" viewBox="0 0 24 24">
+                                        <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+                                    </svg>
+                                </div>
+                                <div>
+                                    <div class="font-semibold">স্মার্ট ফ্যান</div>
+                                    <div class="text-sm text-gray-600">১২৫ পিস বিক্রি</div>
+                                </div>
+                            </div>
+                            <div class="text-right">
+                                <div class="font-bold text-green-600">৫,৬২,৫০০ টাকা</div>
+                                <div class="text-sm text-gray-600">মোট আয়</div>
+                            </div>
+                        </div>
+                        
+                        <div class="flex items-center justify-between p-3 bg-blue-50 rounded-lg border-l-4 border-blue-500">
+                            <div class="flex items-center space-x-3">
+                                <div class="w-10 h-10 bg-blue-500 rounded-lg p-2">
+                                    <svg class="w-full h-full text-white" fill="currentColor" viewBox="0 0 24 24">
+                                        <path d="M9 21c0 .5.4 1 1 1h4c.6 0 1-.5 1-1v-1H9v1zm3-19C8.1 2 5 5.1 5 9c0 2.4 1.2 4.5 3 5.7V17c0 .5.4 1 1 1h6c.6 0 1-.5 1-1v-2.3c1.8-1.3 3-3.4 3-5.7 0-3.9-3.1-7-7-7z"/>
+                                    </svg>
+                                </div>
+                                <div>
+                                    <div class="font-semibold">LED বাল্ব</div>
+                                    <div class="text-sm text-gray-600">২৮৫ পিস বিক্রি</div>
+                                </div>
+                            </div>
+                            <div class="text-right">
+                                <div class="font-bold text-green-600">৭১,২৫০ টাকা</div>
+                                <div class="text-sm text-gray-600">মোট আয়</div>
+                            </div>
+                        </div>
+                        
+                        <div class="flex items-center justify-between p-3 bg-purple-50 rounded-lg border-l-4 border-purple-500">
+                            <div class="flex items-center space-x-3">
+                                <div class="w-10 h-10 bg-purple-500 rounded-lg p-2">
+                                    <svg class="w-full h-full text-white" fill="currentColor" viewBox="0 0 24 24">
+                                        <path d="M15.67 4H14V2h-4v2H8.33C7.6 4 7 4.6 7 5.33v15.33C7 21.4 7.6 22 8.33 22h7.33c.74 0 1.34-.6 1.34-1.33V5.33C17 4.6 16.4 4 15.67 4z"/>
+                                    </svg>
+                                </div>
+                                <div>
+                                    <div class="font-semibold">পাওয়ার ব্যাংক</div>
+                                    <div class="text-sm text-gray-600">৯৫ পিস বিক্রি</div>
+                                </div>
+                            </div>
+                            <div class="text-right">
+                                <div class="font-bold text-green-600">১,১৪,০০০ টাকা</div>
+                                <div class="text-sm text-gray-600">মোট আয়</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Business Insights -->
+                <div class="bg-white rounded-lg shadow p-4 mb-6">
+                    <h3 class="font-bold mb-4 flex items-center">
+                        <svg class="w-5 h-5 text-indigo-600 mr-2" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+                        </svg>
+                        ব্যবসায়িক পরামর্শ
+                    </h3>
+                    
+                    <div class="space-y-3">
+                        <div class="p-3 bg-green-50 rounded-lg border-l-4 border-green-500">
+                            <div class="flex items-center mb-2">
+                                <svg class="w-4 h-4 text-green-600 mr-2" fill="currentColor" viewBox="0 0 24 24">
+                                    <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/>
+                                </svg>
+                                <span class="font-semibold text-green-800">সুপারিশ</span>
+                            </div>
+                            <p class="text-sm text-green-700">স্মার্ট ফ্যানের চাহিদা বেশি। আরও স্টক রাখুন এবং বিশেষ অফার দিন।</p>
+                        </div>
+                        
+                        <div class="p-3 bg-yellow-50 rounded-lg border-l-4 border-yellow-500">
+                            <div class="flex items-center mb-2">
+                                <svg class="w-4 h-4 text-yellow-600 mr-2" fill="currentColor" viewBox="0 0 24 24">
+                                    <path d="M1 21h22L12 2 1 21zm12-3h-2v-2h2v2zm0-4h-2v-4h2v4z"/>
+                                </svg>
+                                <span class="font-semibold text-yellow-800">সতর্কতা</span>
+                            </div>
+                            <p class="text-sm text-yellow-700">ওয়াইফাই রাউটারের বিক্রয় কম। মার্কেটিং বাড়ান বা দাম কমান।</p>
+                        </div>
+                        
+                        <div class="p-3 bg-blue-50 rounded-lg border-l-4 border-blue-500">
+                            <div class="flex items-center mb-2">
+                                <svg class="w-4 h-4 text-blue-600 mr-2" fill="currentColor" viewBox="0 0 24 24">
+                                    <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+                                </svg>
+                                <span class="font-semibold text-blue-800">সুযোগ</span>
+                            </div>
+                            <p class="text-sm text-blue-700">সন্ধ্যা ৬-৮টায় সবচেয়ে বেশি বিক্রয়। এই সময় বিশেষ ছাড় দিন।</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Quick Actions -->
+                <div class="space-y-3">
+                    <button onclick="generateMonthlyReport()" class="w-full bg-teal-500 hover:bg-teal-600 text-white py-3 rounded-lg font-semibold">
+                        মাসিক রিপোর্ট তৈরি করুন
+                    </button>
+                    <button onclick="showScreen('customerInsightsScreen')" class="w-full bg-pink-500 hover:bg-pink-600 text-white py-3 rounded-lg font-semibold">
+                        গ্রাহক বিশ্লেষণ দেখুন
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Customer Insights Screen -->
+        <div id="customerInsightsScreen" class="screen hidden">
+            <div class="bg-pink-600 text-white p-4 flex items-center">
+                <button onclick="showScreen('homeScreen')" class="mr-3">
+                    <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/>
+                    </svg>
+                </button>
+                <h2 class="text-xl font-bold">গ্রাহক তথ্য ও বিশ্লেষণ</h2>
+            </div>
+            
+            <div class="p-6">
+                <!-- Customer Stats -->
+                <div class="bg-white rounded-lg shadow p-4 mb-6">
+                    <h3 class="font-bold mb-4 flex items-center">
+                        <svg class="w-5 h-5 text-pink-600 mr-2" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M16 4c0-1.11.89-2 2-2s2 .89 2 2-.89 2-2 2-2-.89-2-2zm4 18v-6h2.5l-2.54-7.63A1.5 1.5 0 0 0 18.54 8H16c-.8 0-1.54.37-2.01.99l-2.54 3.38c-.36.48-.85.63-1.37.63H8v2h2.08c1.18 0 2.3-.43 3.16-1.22L14.5 12H16v10h4z"/>
+                        </svg>
+                        গ্রাহক পরিসংখ্যান
+                    </h3>
+                    
+                    <div class="grid grid-cols-2 gap-4 mb-4">
+                        <div class="bg-pink-50 p-3 rounded-lg text-center">
+                            <div class="text-2xl font-bold text-pink-600">২৩</div>
+                            <div class="text-sm text-pink-700">আজকের গ্রাহক</div>
+                        </div>
+                        <div class="bg-blue-50 p-3 rounded-lg text-center">
+                            <div class="text-2xl font-bold text-blue-600">৬৮৫</div>
+                            <div class="text-sm text-blue-700">মাসিক গ্রাহক</div>
+                        </div>
+                        <div class="bg-green-50 p-3 rounded-lg text-center">
+                            <div class="text-2xl font-bold text-green-600">৫৫৮</div>
+                            <div class="text-sm text-green-700">গড় বিক্রয়/গ্রাহক</div>
+                        </div>
+                        <div class="bg-purple-50 p-3 rounded-lg text-center">
+                            <div class="text-2xl font-bold text-purple-600">৭৮%</div>
+                            <div class="text-sm text-purple-700">রিটার্ন গ্রাহক</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Peak Hours -->
+                <div class="bg-white rounded-lg shadow p-4 mb-6">
+                    <h3 class="font-bold mb-4">গ্রাহক আগমনের সময়</h3>
+                    <div class="space-y-3">
+                        <div class="flex items-center justify-between">
+                            <span class="text-sm">সকাল ৯-১২টা</span>
+                            <div class="flex items-center">
+                                <div class="w-24 bg-gray-200 rounded-full h-2 mr-2">
+                                    <div class="bg-blue-500 h-2 rounded-full" style="width: 45%"></div>
+                                </div>
+                                <span class="text-sm font-semibold">৪৫%</span>
+                            </div>
+                        </div>
+                        <div class="flex items-center justify-between">
+                            <span class="text-sm">দুপুর ১২-৩টা</span>
+                            <div class="flex items-center">
+                                <div class="w-24 bg-gray-200 rounded-full h-2 mr-2">
+                                    <div class="bg-green-500 h-2 rounded-full" style="width: 25%"></div>
+                                </div>
+                                <span class="text-sm font-semibold">২৫%</span>
+                            </div>
+                        </div>
+                        <div class="flex items-center justify-between">
+                            <span class="text-sm">বিকেল ৩-৬টা</span>
+                            <div class="flex items-center">
+                                <div class="w-24 bg-gray-200 rounded-full h-2 mr-2">
+                                    <div class="bg-yellow-500 h-2 rounded-full" style="width: 65%"></div>
+                                </div>
+                                <span class="text-sm font-semibold">৬৫%</span>
+                            </div>
+                        </div>
+                        <div class="flex items-center justify-between">
+                            <span class="text-sm">সন্ধ্যা ৬-৮টা</span>
+                            <div class="flex items-center">
+                                <div class="w-24 bg-gray-200 rounded-full h-2 mr-2">
+                                    <div class="bg-red-500 h-2 rounded-full" style="width: 85%"></div>
+                                </div>
+                                <span class="text-sm font-semibold">৮৫%</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Customer Preferences -->
+                <div class="bg-white rounded-lg shadow p-4 mb-6">
+                    <h3 class="font-bold mb-4">গ্রাহকদের পছন্দ</h3>
+                    <div class="space-y-3">
+                        <div class="p-3 bg-green-50 rounded-lg">
+                            <div class="flex items-center justify-between mb-2">
+                                <span class="font-semibold text-green-800">সবচেয়ে জনপ্রিয়</span>
+                                <span class="text-sm text-green-600">৮৫% গ্রাহক</span>
+                            </div>
+                            <p class="text-sm text-green-700">স্মার্ট ফ্যান - গরমের কারণে চাহিদা বেশি</p>
+                        </div>
+                        
+                        <div class="p-3 bg-blue-50 rounded-lg">
+                            <div class="flex items-center justify-between mb-2">
+                                <span class="font-semibold text-blue-800">দ্বিতীয় পছন্দ</span>
+                                <span class="text-sm text-blue-600">৬৮% গ্রাহক</span>
+                            </div>
+                            <p class="text-sm text-blue-700">LED বাল্ব - বিদ্যুৎ সাশ্রয়ী বলে জনপ্রিয়</p>
+                        </div>
+                        
+                        <div class="p-3 bg-yellow-50 rounded-lg">
+                            <div class="flex items-center justify-between mb-2">
+                                <span class="font-semibold text-yellow-800">বাড়ছে চাহিদা</span>
+                                <span class="text-sm text-yellow-600">৪৫% বৃদ্ধি</span>
+                            </div>
+                            <p class="text-sm text-yellow-700">পাওয়ার ব্যাংক - মোবাইল ব্যবহার বৃদ্ধির কারণে</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Shop Owner Product Reviews -->
+                <div class="bg-white rounded-lg shadow p-4 mb-6">
+                    <h3 class="font-bold mb-4">দোকানদারের পণ্য পর্যালোচনা</h3>
+                    <div class="space-y-3">
+                        <div class="p-3 bg-green-50 rounded-lg border-l-4 border-green-500">
+                            <div class="flex items-center mb-2">
+                                <div class="w-8 h-8 bg-green-500 rounded-full flex items-center justify-center text-white text-sm font-bold mr-3">
+                                    আপ
+                                </div>
+                                <div>
+                                    <div class="font-semibold text-sm">আপনার পর্যালোচনা</div>
+                                    <div class="text-xs text-gray-600">আজ সকাল ১০:৩০</div>
+                                </div>
+                            </div>
+                            <p class="text-sm text-green-700">"এই মাসে স্মার্ট ফ্যানের বিক্রয় অসাধারণ হয়েছে। গ্রাহকরা খুবই সন্তুষ্ট। গরমের কারণে চাহিদা বেশি।"</p>
+                            <div class="flex items-center mt-2">
+                                <span class="text-green-600 font-semibold">বিক্রয় পারফরম্যান্স:</span>
+                                <span class="text-green-500 ml-2">★★★★★</span>
+                                <span class="text-sm text-gray-600 ml-2">৫/৫</span>
+                            </div>
+                        </div>
+                        
+                        <div class="p-3 bg-blue-50 rounded-lg border-l-4 border-blue-500">
+                            <div class="flex items-center mb-2">
+                                <div class="w-8 h-8 bg-blue-500 rounded-full flex items-center justify-center text-white text-sm font-bold mr-3">
+                                    আপ
+                                </div>
+                                <div>
+                                    <div class="font-semibold text-sm">আপনার পর্যালোচনা</div>
+                                    <div class="text-xs text-gray-600">গতকাল বিকেল ৪:১৫</div>
+                                </div>
+                            </div>
+                            <p class="text-sm text-blue-700">"LED বাল্বের বিক্রয় ভালো। গ্রাহকরা বিদ্যুৎ সাশ্রয়ী বলে পছন্দ করছেন। আরও স্টক রাখা দরকার।"</p>
+                            <div class="flex items-center mt-2">
+                                <span class="text-blue-600 font-semibold">বিক্রয় পারফরম্যান্স:</span>
+                                <span class="text-blue-500 ml-2">★★★★☆</span>
+                                <span class="text-sm text-gray-600 ml-2">৪/৫</span>
+                            </div>
+                        </div>
+                        
+                        <div class="p-3 bg-yellow-50 rounded-lg border-l-4 border-yellow-500">
+                            <div class="flex items-center mb-2">
+                                <div class="w-8 h-8 bg-yellow-500 rounded-full flex items-center justify-center text-white text-sm font-bold mr-3">
+                                    আপ
+                                </div>
+                                <div>
+                                    <div class="font-semibold text-sm">আপনার পর্যালোচনা</div>
+                                    <div class="text-xs text-gray-600">৩ দিন আগে</div>
+                                </div>
+                            </div>
+                            <p class="text-sm text-yellow-700">"ওয়াইফাই রাউটারের বিক্রয় ধীর। দাম একটু বেশি মনে হচ্ছে। প্রমোশন বা ছাড় দিলে ভালো হবে।"</p>
+                            <div class="flex items-center mt-2">
+                                <span class="text-yellow-600 font-semibold">বিক্রয় পারফরম্যান্স:</span>
+                                <span class="text-yellow-500 ml-2">★★☆☆☆</span>
+                                <span class="text-sm text-gray-600 ml-2">২/৫</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Add New Review Button -->
+                    <div class="mt-4">
+                        <button onclick="addProductReview()" class="w-full bg-gradient-to-r from-pink-500 to-rose-500 hover:from-pink-600 hover:to-rose-600 text-white py-3 rounded-lg font-semibold">
+                            নতুন পণ্য পর্যালোচনা যোগ করুন
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- Action Buttons -->
+                <div class="space-y-3">
+                    <button onclick="showCustomerNotification()" class="w-full bg-pink-500 hover:bg-pink-600 text-white py-3 rounded-lg font-semibold">
+                        গ্রাহকদের বিশেষ অফার পাঠান
+                    </button>
+                    <button onclick="showScreen('analyticsScreen')" class="w-full bg-teal-500 hover:bg-teal-600 text-white py-3 rounded-lg font-semibold">
+                        বিক্রয় বিশ্লেষণে ফিরুন
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Settings Screen -->
+        <div id="settingsScreen" class="screen hidden">
+            <div class="bg-gray-600 text-white p-4 flex items-center">
+                <button onclick="showScreen('homeScreen')" class="mr-3">
+                    <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/>
+                    </svg>
+                </button>
+                <h2 class="text-xl font-bold">সেটিংস</h2>
+            </div>
+            
+            <div class="p-6 space-y-6">
+                <!-- Language Settings -->
+                <div class="bg-white p-4 rounded-lg shadow">
+                    <h3 class="font-bold mb-3">ভাষা সেটিংস</h3>
+                    <div class="space-y-2">
+                        <label class="flex items-center">
+                            <input type="radio" name="language" value="bengali" class="mr-3" checked>
+                            <span>বাংলা (Bengali)</span>
+                        </label>
+                        <label class="flex items-center">
+                            <input type="radio" name="language" value="english" class="mr-3">
+                            <span>English</span>
+                        </label>
+                    </div>
+                </div>
+                
+                <!-- Notifications -->
+                <div class="bg-white p-4 rounded-lg shadow">
+                    <h3 class="font-bold mb-3">নোটিফিকেশন</h3>
+                    <div class="space-y-3">
+                        <label class="flex items-center justify-between">
+                            <span>স্টক কম সতর্কতা</span>
+                            <input type="checkbox" class="w-5 h-5" checked>
+                        </label>
+                        <label class="flex items-center justify-between">
+                            <span>রিস্টকিং অর্ডার</span>
+                            <input type="checkbox" class="w-5 h-5" checked>
+                        </label>
+                        <label class="flex items-center justify-between">
+                            <span>বিক্রয় রিপোর্ট</span>
+                            <input type="checkbox" class="w-5 h-5">
+                        </label>
+                    </div>
+                </div>
+                
+                <!-- Store Profile -->
+                <div class="bg-white p-4 rounded-lg shadow">
+                    <h3 class="font-bold mb-3">দোকানের তথ্য</h3>
+                    <div class="space-y-3">
+                        <div>
+                            <label class="block text-sm font-medium mb-1">দোকানের নাম</label>
+                            <input type="text" value="রহমান স্টোর" class="w-full p-2 border rounded-lg">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium mb-1">ঠিকানা</label>
+                            <input type="text" value="ঢাকা, বাংলাদেশ" class="w-full p-2 border rounded-lg">
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Sync Options -->
+                <div class="bg-white p-4 rounded-lg shadow">
+                    <h3 class="font-bold mb-3">সিঙ্ক অপশন</h3>
+                    <div class="space-y-3">
+                        <button class="w-full bg-blue-500 hover:bg-blue-600 text-white py-2 rounded-lg">
+                            ERP সিস্টেমের সাথে সিঙ্ক করুন
+                        </button>
+                        <div class="text-sm text-gray-600 text-center">
+                            শেষ সিঙ্ক: ২ ঘন্টা আগে
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Logout Option -->
+                <div class="bg-white p-4 rounded-lg shadow">
+                    <h3 class="font-bold mb-3">অ্যাকাউন্ট</h3>
+                    <button onclick="logout()" class="w-full bg-red-500 hover:bg-red-600 text-white py-3 rounded-lg font-semibold flex items-center justify-center space-x-2">
+                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M17 7l-1.41 1.41L18.17 11H8v2h10.17l-2.58 2.59L17 17l5-5zM4 5h8V3H4c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h8v-2H4V5z"/>
+                        </svg>
+                        <span>লগআউট করুন</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Notification Toast -->
+        <div id="notification" class="hidden fixed top-2 left-2 right-2 z-50">
+            <div class="premium-card rounded-lg p-2 shadow-xl notification border-l-4 border-green-500">
+                <div class="flex items-center">
+                    <div class="w-6 h-6 success-gradient rounded-lg flex items-center justify-center mr-2">
+                        <svg class="w-3 h-3 text-white" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/>
+                        </svg>
+                    </div>
+                    <span id="notificationText" class="font-medium text-gray-800 text-xs"></span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function showScreen(screenId) {
+            // Hide all screens
+            const screens = document.querySelectorAll('.screen');
+            screens.forEach(screen => screen.classList.add('hidden'));
+            
+            // Show selected screen
+            document.getElementById(screenId).classList.remove('hidden');
+        }
+        
+        function simulateScan() {
+            // Simulate scanning process
+            const scanResult = document.getElementById('scanResult');
+            scanResult.classList.remove('hidden');
+            
+            // Show success notification
+            showNotification('পণ্য সফলভাবে স্ক্যান হয়েছে!');
+        }
+        
+        function sendRestockOrder() {
+            // Show success message
+            const successMsg = document.getElementById('restockSuccess');
+            successMsg.classList.remove('hidden');
+            
+            // Show notification
+            showNotification('রিস্টকিং অর্ডার সফলভাবে পাঠানো হয়েছে!');
+            
+            // Hide success message after 3 seconds
+            setTimeout(() => {
+                successMsg.classList.add('hidden');
+            }, 3000);
+        }
+        
+        function showNotification(message) {
+            const notification = document.getElementById('notification');
+            const notificationText = document.getElementById('notificationText');
+            
+            notificationText.textContent = message;
+            notification.classList.remove('hidden');
+            
+            // Hide notification after 3 seconds
+            setTimeout(() => {
+                notification.classList.add('hidden');
+            }, 3000);
+        }
+        
+        function login(event) {
+            event.preventDefault();
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+            
+            // Simple demo authentication
+            if (username === 'admin' && password === '123456') {
+                showScreen('homeScreen');
+                showNotification('সফলভাবে লগইন হয়েছে!');
+            } else {
+                showNotification('ভুল ব্যবহারকারীর নাম বা পাসওয়ার্ড!');
+            }
+        }
+        
+        function openChat(type) {
+            const chatTitle = document.getElementById('chatTitle');
+            const chatStatus = document.getElementById('chatStatus');
+            const chatAvatar = document.getElementById('chatAvatar');
+            
+            if (type === 'erp') {
+                chatTitle.textContent = 'ERP সিস্টেম';
+                chatStatus.textContent = 'অনলাইন';
+                chatAvatar.innerHTML = '<svg class="w-5 h-5 text-indigo-600" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>';
+            } else if (type === 'warehouse') {
+                chatTitle.textContent = 'ওয়্যারহাউস সেন্টার';
+                chatStatus.textContent = 'অনলাইন';
+                chatAvatar.innerHTML = '<svg class="w-5 h-5 text-indigo-600" fill="currentColor" viewBox="0 0 24 24"><path d="M12 3L2 12h3v8h14v-8h3L12 3zm0 2.84L18.16 12H17v6H7v-6H5.84L12 5.84z"/></svg>';
+            }
+            
+            showScreen('chatScreen');
+        }
+        
+        function sendMessage() {
+            const messageInput = document.getElementById('messageInput');
+            const chatMessages = document.getElementById('chatMessages');
+            const message = messageInput.value.trim();
+            
+            if (message) {
+                // Add user message
+                const userMessage = document.createElement('div');
+                userMessage.className = 'flex justify-end';
+                userMessage.innerHTML = `
+                    <div class="bg-indigo-500 text-white p-3 rounded-lg shadow max-w-xs">
+                        <p class="text-sm">${message}</p>
+                        <p class="text-xs text-indigo-200 mt-1">${new Date().toLocaleTimeString('bn-BD', {hour: '2-digit', minute: '2-digit'})}</p>
+                    </div>
+                `;
+                chatMessages.appendChild(userMessage);
+                
+                // Clear input
+                messageInput.value = '';
+                
+                // Simulate response after 2 seconds
+                setTimeout(() => {
+                    const responses = [
+                        'আপনার অনুরোধ পেয়েছি। শীঘ্রই উত্তর দেব।',
+                        'স্টক আপডেট চেক করছি...',
+                        'ডেলিভারি ট্র্যাকিং তথ্য পাঠাচ্ছি।',
+                        'আপনার অর্ডার প্রসেস করা হচ্ছে।'
+                    ];
+                    const randomResponse = responses[Math.floor(Math.random() * responses.length)];
+                    
+                    const botMessage = document.createElement('div');
+                    botMessage.className = 'flex justify-start';
+                    botMessage.innerHTML = `
+                        <div class="bg-white p-3 rounded-lg shadow max-w-xs">
+                            <p class="text-sm">${randomResponse}</p>
+                            <p class="text-xs text-gray-500 mt-1">${new Date().toLocaleTimeString('bn-BD', {hour: '2-digit', minute: '2-digit'})}</p>
+                        </div>
+                    `;
+                    chatMessages.appendChild(botMessage);
+                    
+                    // Scroll to bottom
+                    chatMessages.scrollTop = chatMessages.scrollHeight;
+                }, 2000);
+                
+                // Scroll to bottom
+                chatMessages.scrollTop = chatMessages.scrollHeight;
+                
+                showNotification('বার্তা পাঠানো হয়েছে!');
+            }
+        }
+        
+        function sendQuickMessage(type) {
+            let message = '';
+            switch(type) {
+                case 'stock_update':
+                    message = 'স্টক আপডেট অনুরোধ করছি';
+                    break;
+                case 'delivery_status':
+                    message = 'ডেলিভারি স্ট্যাটাস জানতে চাই';
+                    break;
+                case 'urgent_restock':
+                    message = 'জরুরি রিস্টক প্রয়োজন';
+                    break;
+            }
+            
+            showNotification(`${message} - বার্তা পাঠানো হয়েছে!`);
+        }
+        
+        function logout() {
+            // Clear any stored data (if any)
+            // Reset form fields
+            document.getElementById('username').value = '';
+            document.getElementById('password').value = '';
+            
+            // Show login screen
+            showScreen('loginScreen');
+            
+            // Show logout notification
+            showNotification('সফলভাবে লগআউট হয়েছে!');
+        }
+        
+        // Allow Enter key to send message
+        document.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter' && document.getElementById('messageInput') === document.activeElement) {
+                sendMessage();
+            }
+        });
+        
+        // POS System Variables
+        let cart = [];
+        let currentChatType = '';
+        let dailySales = [];
+        let customerCount = 0;
+        
+        // POS System Functions
+        function addToCart(id, name, price) {
+            const existingItem = cart.find(item => item.id === id);
+            
+            if (existingItem) {
+                existingItem.quantity += 1;
+            } else {
+                cart.push({
+                    id: id,
+                    name: name,
+                    price: price,
+                    quantity: 1
+                });
+            }
+            
+            updateCartDisplay();
+            showNotification(`${name} কার্টে যোগ করা হয়েছে!`);
+        }
+        
+        function removeFromCart(id) {
+            cart = cart.filter(item => item.id !== id);
+            updateCartDisplay();
+            showNotification('পণ্য কার্ট থেকে সরানো হয়েছে!');
+        }
+        
+        function updateQuantity(id, change) {
+            const item = cart.find(item => item.id === id);
+            if (item) {
+                item.quantity += change;
+                if (item.quantity <= 0) {
+                    removeFromCart(id);
+                } else {
+                    updateCartDisplay();
+                }
+            }
+        }
+        
+        function clearCart() {
+            cart = [];
+            updateCartDisplay();
+            showNotification('কার্ট খালি করা হয়েছে!');
+        }
+        
+        function updateCartDisplay() {
+            const cartItems = document.getElementById('cartItems');
+            const totalAmount = document.getElementById('totalAmount');
+            const vatAmount = document.getElementById('vatAmount');
+            const grandTotal = document.getElementById('grandTotal');
+            const checkoutBtn = document.getElementById('checkoutBtn');
+            
+            if (cart.length === 0) {
+                cartItems.innerHTML = '<div class="text-gray-500 text-center py-4">কার্ট খালি</div>';
+                totalAmount.textContent = '০ টাকা';
+                vatAmount.textContent = '০ টাকা';
+                grandTotal.textContent = '০ টাকা';
+                checkoutBtn.disabled = true;
+                return;
+            }
+            
+            let total = 0;
+            cartItems.innerHTML = '';
+            
+            cart.forEach(item => {
+                const itemTotal = item.price * item.quantity;
+                total += itemTotal;
+                
+                const cartItem = document.createElement('div');
+                cartItem.className = 'flex items-center justify-between p-2 bg-gray-50 rounded';
+                cartItem.innerHTML = `
+                    <div class="flex-1">
+                        <div class="font-semibold text-sm">${item.name}</div>
+                        <div class="text-xs text-gray-600">${item.price} টাকা x ${item.quantity}</div>
+                    </div>
+                    <div class="flex items-center space-x-2">
+                        <button onclick="updateQuantity('${item.id}', -1)" class="w-6 h-6 bg-red-500 text-white rounded text-xs">-</button>
+                        <span class="text-sm font-bold">${item.quantity}</span>
+                        <button onclick="updateQuantity('${item.id}', 1)" class="w-6 h-6 bg-green-500 text-white rounded text-xs">+</button>
+                        <button onclick="removeFromCart('${item.id}')" class="w-6 h-6 bg-gray-500 text-white rounded text-xs">×</button>
+                    </div>
+                `;
+                cartItems.appendChild(cartItem);
+            });
+            
+            const vat = Math.round(total * 0.05);
+            const grand = total + vat;
+            
+            totalAmount.textContent = `${total.toLocaleString()} টাকা`;
+            vatAmount.textContent = `${vat.toLocaleString()} টাকা`;
+            grandTotal.textContent = `${grand.toLocaleString()} টাকা`;
+            checkoutBtn.disabled = false;
+        }
+        
+        function processPayment() {
+            const paymentMethod = document.getElementById('paymentMethod').value;
+            const grandTotal = document.getElementById('grandTotal').textContent;
+            
+            let paymentText = '';
+            switch(paymentMethod) {
+                case 'cash':
+                    paymentText = 'নগদ';
+                    break;
+                case 'card':
+                    paymentText = 'কার্ড';
+                    break;
+                case 'mobile':
+                    paymentText = 'মোবাইল ব্যাংকিং';
+                    break;
+            }
+            
+            // Record sale data
+            const saleAmount = parseInt(grandTotal.replace(/[^\d]/g, ''));
+            const saleData = {
+                items: [...cart],
+                total: saleAmount,
+                paymentMethod: paymentMethod,
+                timestamp: new Date(),
+                customerNumber: ++customerCount
+            };
+            
+            dailySales.push(saleData);
+            
+            // Update daily stats
+            updateDailyStats();
+            
+            // Simulate payment processing
+            showNotification(`${paymentText} দিয়ে ${grandTotal} পেমেন্ট সফল হয়েছে!`);
+            
+            // Show customer number
+            setTimeout(() => {
+                showNotification(`গ্রাহক নং: ${customerCount} - ধন্যবাদ!`);
+            }, 1500);
+            
+            // Clear cart after successful payment
+            setTimeout(() => {
+                clearCart();
+                showNotification('নতুন বিক্রয়ের জন্য প্রস্তুত!');
+                
+                // Check for notifications
+                checkForBusinessNotifications();
+            }, 3000);
+        }
+        
+        function updateDailyStats() {
+            // Update home screen stats
+            const totalSales = dailySales.reduce((sum, sale) => sum + sale.total, 0);
+            const homeStats = document.querySelector('.bg-blue-500.rounded-lg.p-2');
+            if (homeStats) {
+                homeStats.innerHTML = `
+                    <span class="font-semibold">আজকের বিক্রয়:</span> ${totalSales.toLocaleString()} টাকা | 
+                    <span class="font-semibold">গ্রাহক:</span> ${customerCount} জন
+                `;
+            }
+        }
+        
+        function checkForBusinessNotifications() {
+            // Check if we should show business insights
+            if (customerCount % 5 === 0 && customerCount > 0) {
+                setTimeout(() => {
+                    const topProduct = getTopSellingProduct();
+                    showNotification(`🔥 আজকের সর্বাধিক বিক্রি: ${topProduct}!`);
+                }, 2000);
+            }
+            
+            if (customerCount % 10 === 0 && customerCount > 0) {
+                setTimeout(() => {
+                    showNotification(`📈 দারুণ! আজ ${customerCount} জন গ্রাহক সেবা দিয়েছেন!`);
+                }, 4000);
+            }
+        }
+        
+        function getTopSellingProduct() {
+            const productCount = {};
+            dailySales.forEach(sale => {
+                sale.items.forEach(item => {
+                    productCount[item.name] = (productCount[item.name] || 0) + item.quantity;
+                });
+            });
+            
+            let topProduct = 'স্মার্ট ফ্যান';
+            let maxCount = 0;
+            
+            for (const [product, count] of Object.entries(productCount)) {
+                if (count > maxCount) {
+                    maxCount = count;
+                    topProduct = product;
+                }
+            }
+            
+            return topProduct;
+        }
+        
+        function generateMonthlyReport() {
+            showNotification('মাসিক রিপোর্ট তৈরি করা হচ্ছে...');
+            
+            setTimeout(() => {
+                showNotification('✅ মাসিক রিপোর্ট তৈরি সম্পন্ন! ইমেইলে পাঠানো হয়েছে।');
+            }, 3000);
+        }
+        
+        function showCustomerNotification() {
+            showNotification('গ্রাহকদের বিশেষ অফার SMS পাঠানো হচ্ছে...');
+            
+            setTimeout(() => {
+                showNotification('📱 ৬৮৫ জন গ্রাহকের কাছে অফার পাঠানো হয়েছে!');
+            }, 2500);
+        }
+        
+        // Enhanced Chat Functions
+        function openChat(type) {
+            currentChatType = type;
+            const chatTitle = document.getElementById('chatTitle');
+            const chatStatus = document.getElementById('chatStatus');
+            const chatAvatar = document.getElementById('chatAvatar');
+            const chatMessages = document.getElementById('chatMessages');
+            
+            // Clear previous messages
+            chatMessages.innerHTML = '';
+            
+            if (type === 'headoffice') {
+                chatTitle.textContent = 'হেড অফিস';
+                chatStatus.textContent = 'অনলাইন';
+                chatAvatar.innerHTML = '<svg class="w-5 h-5 text-indigo-600" fill="currentColor" viewBox="0 0 24 24"><path d="M12 7V3H2v18h20V7H12zM6 19H4v-2h2v2zm0-4H4v-2h2v2zm0-4H4V9h2v2zm0-4H4V5h2v2zm4 12H8v-2h2v2zm0-4H8v-2h2v2zm0-4H8V9h2v2zm0-4H8V5h2v2zm10 12h-8v-2h2v-2h-2v-2h2v-2h-2V9h8v10z"/></svg>';
+                
+                // Add Head Office conversation
+                addChatMessage(false, 'সালাম! আপনার দোকানের এই মাসের পারফরম্যান্স দেখে খুশি হয়েছি। স্মার্ট ফ্যানের বিক্রয় চমৎকার!', '১০:৩০ AM');
+                addChatMessage(true, 'ধন্যবাদ স্যার! গরমের কারণে ফ্যানের চাহিদা বেশি। LED বাল্বের স্টক শেষ হয়ে যাচ্ছে।', '১০:৩২ AM');
+                addChatMessage(false, 'বুঝতে পারছি। আপনার জন্য ১০০ পিস LED বাল্ব এবং ২০ পিস নতুন স্মার্ট ফ্যান পাঠাচ্ছি।', '১০:৩৩ AM');
+                addChatMessage(true, 'দারুণ! কবে পৌঁছাবে? আর নতুন পণ্যের তালিকা পাঠাতে পারেন?', '১০:৩৫ AM');
+                addChatMessage(false, 'আগামীকাল সকালে পৌঁছাবে। নতুন পাওয়ার ব্যাংক এবং ব্লুটুথ স্পিকার এসেছে। ক্যাটালগ পাঠাচ্ছি।', '১০:৩৬ AM');
+                
+            } else if (type === 'warehouse') {
+                chatTitle.textContent = 'ওয়্যারহাউস সেন্টার';
+                chatStatus.textContent = 'অনলাইন';
+                chatAvatar.innerHTML = '<svg class="w-5 h-5 text-indigo-600" fill="currentColor" viewBox="0 0 24 24"><path d="M12 3L2 12h3v8h14v-8h3L12 3zm0 2.84L18.16 12H17v6H7v-6H5.84L12 5.84z"/></svg>';
+                
+                // Add Warehouse conversation
+                addChatMessage(false, 'আসসালামু আলাইকুম! আপনার অর্ডারকৃত পণ্য প্যাকিং সম্পন্ন। আজ বিকেলে ডেলিভারি হবে।', '০৯:১৫ AM');
+                addChatMessage(true, 'ওয়ালাইকুম সালাম। কি কি পণ্য আসছে? ইনভয়েস নাম্বার দিন।', '০৯:১৮ AM');
+                addChatMessage(false, 'ইনভয়েস #WH-2024-1205: স্মার্ট ফ্যান - ১০ পিস, পাওয়ার ব্যাংক - ২০ পিস, LED বাল্ব - ৫০ পিস।', '০৯:২০ AM');
+                addChatMessage(true, 'পারফেক্ট! ডেলিভারি চার্জ কত? আর ড্রাইভারের নাম্বার দিন।', '০৯:২২ AM');
+                addChatMessage(false, 'ডেলিভারি ফ্রি। ড্রাইভার করিম ভাই - ০১৭১২৩৪৫৬৭৮। বিকেল ৩:০০ টায় পৌঁছাবেন।', '০৯:২৫ AM');
+                addChatMessage(true, 'ধন্যবাদ! পেমেন্ট ক্যাশ অন ডেলিভারি হবে।', '০৯:২৬ AM');
+            }
+            
+            showScreen('chatScreen');
+        }
+        
+        function addChatMessage(isUser, message, time) {
+            const chatMessages = document.getElementById('chatMessages');
+            const messageDiv = document.createElement('div');
+            
+            if (isUser) {
+                messageDiv.className = 'flex justify-end';
+                messageDiv.innerHTML = `
+                    <div class="bg-indigo-500 text-white p-3 rounded-lg shadow max-w-xs">
+                        <p class="text-sm">${message}</p>
+                        <p class="text-xs text-indigo-200 mt-1">${time}</p>
+                    </div>
+                `;
+            } else {
+                messageDiv.className = 'flex justify-start';
+                messageDiv.innerHTML = `
+                    <div class="bg-white p-3 rounded-lg shadow max-w-xs">
+                        <p class="text-sm">${message}</p>
+                        <p class="text-xs text-gray-500 mt-1">${time}</p>
+                    </div>
+                `;
+            }
+            
+            chatMessages.appendChild(messageDiv);
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+        }
+        
+        function sendMessage() {
+            const messageInput = document.getElementById('messageInput');
+            const message = messageInput.value.trim();
+            
+            if (message) {
+                const currentTime = new Date().toLocaleTimeString('bn-BD', {hour: '2-digit', minute: '2-digit'});
+                
+                // Add user message
+                addChatMessage(true, message, currentTime);
+                
+                // Clear input
+                messageInput.value = '';
+                
+                // Simulate response after 2 seconds
+                setTimeout(() => {
+                    let responses = [];
+                    
+                    if (currentChatType === 'headoffice') {
+                        responses = [
+                            'আপনার অনুরোধ হেড অফিসে পৌঁছেছে। শীঘ্রই ব্যবস্থা নেওয়া হবে।',
+                            'নতুন পণ্যের তালিকা আপডেট করে পাঠাচ্ছি।',
+                            'আপনার বিক্রয় রিপোর্ট পর্যালোচনা করা হচ্ছে।',
+                            'বোনাস এবং ইনসেন্টিভ হিসাব করা হচ্ছে।',
+                            'আপনার অর্ডার অনুমোদন করা হয়েছে।'
+                        ];
+                    } else if (currentChatType === 'warehouse') {
+                        responses = [
+                            'ওয়্যারহাউস থেকে আপডেট: আপনার অর্ডার প্যাকিং হচ্ছে।',
+                            'ডেলিভারি ট্রাক রওনা হয়েছে।',
+                            'আপনার পণ্য ইনভেন্টরিতে যোগ করা হয়েছে।',
+                            'নতুন স্টক আগামীকাল পৌঁছাবে।',
+                            'ওয়্যারহাউস ম্যানেজার আপনার সাথে যোগাযোগ করবেন।'
+                        ];
+                    }
+                    
+                    const randomResponse = responses[Math.floor(Math.random() * responses.length)];
+                    const responseTime = new Date().toLocaleTimeString('bn-BD', {hour: '2-digit', minute: '2-digit'});
+                    
+                    addChatMessage(false, randomResponse, responseTime);
+                }, 2000);
+                
+                showNotification('বার্তা পাঠানো হয়েছে!');
+            }
+        }
+        
+        // Product ordering functionality
+        let orderHistory = [];
+        
+        function orderProduct(id, name, wholesalePrice) {
+            // Show quantity selection dialog
+            const quantity = prompt(`${name} কত পিস অর্ডার করবেন?`, '10');
+            
+            if (quantity && parseInt(quantity) > 0) {
+                const orderData = {
+                    id: id,
+                    name: name,
+                    quantity: parseInt(quantity),
+                    wholesalePrice: wholesalePrice,
+                    totalAmount: wholesalePrice * parseInt(quantity),
+                    orderDate: new Date(),
+                    status: 'অর্ডার প্রসেসিং',
+                    orderNumber: 'ORD-' + Date.now()
+                };
+                
+                orderHistory.push(orderData);
+                
+                showNotification(`${name} - ${quantity} পিস অর্ডার সফল! অর্ডার নং: ${orderData.orderNumber}`);
+                
+                // Simulate order confirmation after 3 seconds
+                setTimeout(() => {
+                    orderData.status = 'অর্ডার কনফার্ম';
+                    showNotification(`✅ অর্ডার কনফার্ম হয়েছে! ২-৩ দিনের মধ্যে ডেলিভারি হবে।`);
+                }, 3000);
+            }
+        }
+        
+        function showOrderHistory() {
+            if (orderHistory.length === 0) {
+                showNotification('কোনো অর্ডার হিস্টরি নেই।');
+                return;
+            }
+            
+            let historyText = 'সাম্প্রতিক অর্ডার:\n\n';
+            orderHistory.slice(-3).forEach(order => {
+                historyText += `${order.name} - ${order.quantity} পিস\n`;
+                historyText += `অর্ডার নং: ${order.orderNumber}\n`;
+                historyText += `স্ট্যাটাস: ${order.status}\n\n`;
+            });
+            
+            alert(historyText);
+        }
+        
+        function addProductReview() {
+            const products = ['স্মার্ট ফ্যান', 'LED বাল্ব', 'পাওয়ার ব্যাংক', 'ওয়াইফাই রাউটার'];
+            const selectedProduct = prompt('কোন পণ্যের পর্যালোচনা দিতে চান?\n\n1. স্মার্ট ফ্যান\n2. LED বাল্ব\n3. পাওয়ার ব্যাংক\n4. ওয়াইফাই রাউটার\n\nনাম্বার লিখুন (১-৪):');
+            
+            if (selectedProduct && selectedProduct >= 1 && selectedProduct <= 4) {
+                const productName = products[selectedProduct - 1];
+                const review = prompt(`${productName} সম্পর্কে আপনার মতামত লিখুন:`);
+                const rating = prompt('রেটিং দিন (১-৫):', '5');
+                
+                if (review && rating) {
+                    showNotification(`${productName} এর পর্যালোচনা সফলভাবে যোগ করা হয়েছে! রেটিং: ${rating}/৫`);
+                }
+            }
+        }
+        
+        // Initialize app
+        document.addEventListener('DOMContentLoaded', function() {
+            showScreen('loginScreen');
+        });
+    </script>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'96b805339675dae2',t:'MTc1NDU4Mjc3Ny4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>
